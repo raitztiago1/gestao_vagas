@@ -1,2 +1,11 @@
-package com.raitztiago.gestao_vagas.exceptions;public class ErrorMessageDTO {
+package com.raitztiago.gestao_vagas.exceptions;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ErrorMessageDTO {
+    private String message;
+    private String field;
 }
