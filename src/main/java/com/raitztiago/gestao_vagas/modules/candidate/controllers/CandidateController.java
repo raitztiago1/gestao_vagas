@@ -1,5 +1,6 @@
 package com.raitztiago.gestao_vagas.modules.candidate.controllers;
 
+import com.raitztiago.gestao_vagas.exceptions.UserFoundException;
 import com.raitztiago.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import com.raitztiago.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 
@@ -20,6 +21,13 @@ public class CandidateController {
 
     @PostMapping("/")
     public CandidateEntity create(@Valid @RequestBody CandidateEntity candidateEntity) {
+
+        this.candidateRepository.findByUsernameOrEmail(
+                candidateEntity.getUsername(), candidateEntity.getEmail()).ifPresent(((user) -> {
+                    throw new UserFoundException();
+                }));
+        ;
+
         return this.candidateRepository.save(candidateEntity);
     }
 
