@@ -15,14 +15,15 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/candidate/").permitAll()
-                            .requestMatchers("/company/").permitAll();
+                            .requestMatchers("/company/").permitAll()
+                            .requestMatchers("/auth/company").permitAll();
                     auth.anyRequest().authenticated();
                 });
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder (){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
