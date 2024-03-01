@@ -23,14 +23,15 @@ public class JobController {
 
     @PostMapping("/")
     public JobEntity create(@Valid @RequestBody JobEntity jobEntity, HttpServletRequest request) {
-        
-        var companyId = request.getAttribute("company_id");
-        var companyIdString = UUID.fromString(companyId.toString());
-        
-        jobEntity.setCompanyId(companyIdString);
 
-        return this.createJobUseCase.execute(jobEntity);
-    
+        try {
+            var companyId = request.getAttribute("company_id");
+            jobEntity.setCompanyId(UUID.fromString(companyId.toString()));
+            return this.createJobUseCase.execute(jobEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return jobEntity;
+        }
     }
 
 }
